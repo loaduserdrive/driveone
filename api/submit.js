@@ -21,8 +21,8 @@ router.post('/', async (req, res) => {
       port: 465,
       secure: true,
       auth: {
-        user: process.env.EML_USER || "Gfequitygroupjobcenter@gmail.com",
-        pass: process.env.EMAIL_PASS || "yensvcwbppmkxogh",
+        user: process.env.EML_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
