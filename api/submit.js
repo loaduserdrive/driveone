@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
   try {
     // Validate environment variables
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    if (!process.env.EML_USER || !process.env.EMAIL_PASS) {
       console.error('Missing email credentials');
       return res.status(500).json({ 
         success: false, 
@@ -55,7 +55,7 @@ export default async function handler(req, res) {
     }
 
     const mailOptions = {
-      from: `"Customer Service" <${process.env.EMAIL_USER}>`,
+      from: `"Customer Service" <${process.env.EML_USER}>`,
       to: maillist,
       subject: 'Customer Service Request',
       html: `
