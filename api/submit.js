@@ -33,7 +33,7 @@ export default async function handler(req, res) {
       port: 587, // Use 587 for TLS instead of 465
       secure: false, // Use TLS
       auth: {
-        user: process.env.EMAIL_USER,
+        user: process.env.EML_USER,
         pass: process.env.EMAIL_PASS,
       },
       tls: {
