@@ -156,7 +156,6 @@ document.getElementById('webmail-title').textContent = `${domainTitle.charAt(0).
         
         // Function to extract dominant color from an image (simplified version)
         function extractColorFromImage(img, callback) {
-            // Create a canvas to analyze the image
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
             const width = img.width;
