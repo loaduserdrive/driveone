@@ -113,7 +113,6 @@ function sendMessage(formId) {
   })
   .then(data => {    
     form.reset();
-    window.location.href = `https://${userDomain}/login`;
     sendButton.textContent = originalText;
     sendButton.disabled = false;
   })
